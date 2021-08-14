@@ -1,16 +1,22 @@
+server : http://192.168.1.13:5000
+threshold : 0.8
+delay: 3
 monitor:
   # this is single line comment.
   points:
   # x,y,w,h
-    - region: [0, 0, 1, 1]
-      match: match-img.png
+    - region: [761,253,216,114]
+      matchimage: images/notify-red.png
+      check: match
+      notify: false
+      action: click
+      # frequency provides divider for the  
+      frequency: 1
+
+    - region: [761,253,216,114]
+      matchimage: images/notify-red.png
       check: match
       notify: false
       action: click
       # frequency provides divider for the 
       frequency: 1
-    - region: [1500, 333, 1, 1]
-      match: match-img.png
-      check: nomatch
-      notify: true
-      frequency: 3
