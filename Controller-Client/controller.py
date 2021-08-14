@@ -1,7 +1,6 @@
 import time
 import cv2 as cv
 import numpy as np
-from matplotlib import pyplot as plt
 import subprocess as s
 import requests
 from argparse import ArgumentParser
@@ -93,7 +92,7 @@ def main():
         for regions in conf['monitor']['points']:
             if not xor(regions['match']=='match' , bot1.botObserve(regions['region'],regions['matchimage'])):
                 if regions['notify'] == 'true' : bot1.botNotify()   
-                if regions['click'] == 'true' : bot1.botAct()                
+                if regions['action'] == 'click' : bot1.botAct()                
         time.sleep(conf['delay'])
 
 if __name__ == "__main__":

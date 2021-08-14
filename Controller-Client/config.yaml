@@ -6,17 +6,17 @@ monitor:
   points:
   # x,y,w,h
     - region: [761,253,216,114]
-      matchimage: images/notify-red.png
+      matchimage: images/OK-15mins-wait.png.png
       check: match
-      notify: false
+      notify: true
       action: click
       # frequency provides divider for the  
       frequency: 1
 
-    - region: [761,253,216,114]
+    - region: [1147,31,35,35]
       matchimage: images/notify-red.png
       check: match
-      notify: false
-      action: click
+      notify: true
+      action: none
       # frequency provides divider for the 
       frequency: 1
