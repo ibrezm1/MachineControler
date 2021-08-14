@@ -1,0 +1,4 @@
+matplotlib
+opencv-contrib-python
+requests
+pyyaml

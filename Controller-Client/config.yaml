@@ -1,0 +1,16 @@
+monitor:
+  # this is single line comment.
+  points:
+  # x,y,w,h
+    - region: [0, 0, 1, 1]
+      match: match-img.png
+      check: match
+      notify: false
+      action: click
+      # frequency provides divider for the 
+      frequency: 1
+    - region: [1500, 333, 1, 1]
+      match: match-img.png
+      check: nomatch
+      notify: true
+      frequency: 3
