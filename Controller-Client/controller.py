@@ -55,7 +55,7 @@ class Bot:
 
         img_gray = cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)
         template = cv.imread(image,0)
-        w, h = template.shape[::-1]
+        self.template_shape = template.shape[::-1]
         self.res = cv.matchTemplate(img_gray,template,cv.TM_CCOEFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv.minMaxLoc(self.res)
         return max_val>=self.threshold
@@ -67,6 +67,7 @@ class Bot:
     def botAct(self):
         ex_x,ex_y,ex_w,ex_h = self.region
         loc = np.where( self.res >= self.threshold)
+        w, h = self.template_shape
         for pt in zip(*loc[::-1]):
             rl_x, rl_y = ( pt[0] + int(w/2), pt[1] + int(h/2) )
             cx_x, cx_y = ex_x + rl_x,ex_y + rl_y
