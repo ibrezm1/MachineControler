@@ -1,3 +1,4 @@
+from ctypes import Structure, windll, c_uint, sizeof, byref
 from flask import Flask,request
 from PIL import ImageGrab
 import cv2
@@ -11,14 +12,31 @@ from logging.handlers import RotatingFileHandler
 
 import winsound
 import mouse
+import sys
 
-logger = logging.getLogger('waitress')
-handler = RotatingFileHandler('my_log.log', maxBytes=20000, backupCount=3)
-logger.addHandler(handler)
-logger.setLevel(logging.INFO)
+logger = logging.getLogger()
+logging.basicConfig(
+        handlers=[RotatingFileHandler('./logs/my_log.log', maxBytes=100000, backupCount=2)],
+        level=logging.INFO,
+        format="[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s",
+        datefmt='%Y-%m-%dT%H:%M:%S')
 
 
 app = Flask(__name__)
+class LASTINPUTINFO(Structure):
+    _fields_ = [
+        ('cbSize', c_uint),
+        ('dwTime', c_uint),
+    ]
+
+@app.route("/idle")
+def get_idle_duration():
+    lastInputInfo = LASTINPUTINFO()
+    lastInputInfo.cbSize = sizeof(lastInputInfo)
+    windll.user32.GetLastInputInfo(byref(lastInputInfo))
+    millis = windll.kernel32.GetTickCount() - lastInputInfo.dwTime
+    return str(millis / 1000.0)
+
 
 
 @app.route("/")
