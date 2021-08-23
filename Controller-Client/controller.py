@@ -65,7 +65,7 @@ class Bot:
     def botNotify(self):
         requests.get(f"{self.serverurl}/play")
 
-    def botisUserAcive(self):
+    def botisUserinActive(self):
         useridle = requests.get(f"{self.serverurl}/idle")
         idletime = int(float(useridle.text))
         return idletime > self.useractivitythreshold
@@ -83,8 +83,8 @@ class Bot:
     
     def botRespond(self,region):
         if not xor(region['check']=='match' , self.botObserve(region['region'],region['matchimage'])):
-            if region['validateisactive']=='true' and not self.botisUserAcive() : return
-            if region['notify'] == True : self.botNotify()
+            if region['validateisactive'] and not self.botisUserinActive() : return
+            if region['notify'] : self.botNotify()
             if region['action'] == 'click' : self.botAct()    
 
 
