@@ -82,7 +82,7 @@ class Bot:
             requests.get(f"{self.serverurl}/mouse?cx={cx_x}&cy={cx_y}")
     
     def botRespond(self,region):
-        if not xor(region['match']=='match' , self.botObserve(region['region'],region['matchimage'])):
+        if not xor(region['check']=='match' , self.botObserve(region['region'],region['matchimage'])):
             if region['validateisactive']=='true' and self.botisUserAcive():
                 if region['notify'] == 'true' : self.botNotify()
                 if region['action'] == 'click' : self.botAct()    
