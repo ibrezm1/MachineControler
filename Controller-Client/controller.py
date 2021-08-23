@@ -89,14 +89,14 @@ class Bot:
 
 
 def main():
-    #parser = ArgumentParser(description="Config Selection")
-    #parser.add_argument("-f", dest="filename", required=True,
-    #                    help="input file with config.yaml", metavar="FILE",
-    #                    type=lambda x: is_valid_file(parser, x))
-    #args = parser.parse_args()
-    #config = args.filename.name
+    parser = ArgumentParser(description="Config Selection")
+    parser.add_argument("-f", dest="filename", required=True,
+                        help="input file with config.yaml", metavar="FILE",
+                        type=lambda x: is_valid_file(parser, x))
+    args = parser.parse_args()
+    config = args.filename.name
     
-    config = 'config.yaml'
+    #config = 'config.yaml'
 
     with open(config, 'r') as f:
         conf = yaml.safe_load(f)
