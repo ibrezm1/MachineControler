@@ -7,7 +7,7 @@ monitor:
   points:
   # x,y,w,h
     - region: [761,253,216,114]
-      matchimage: images/OK-15mins-wait.png.png
+      matchimage: images/OK-15mins-wait.png
       validateisactive: false
       check: match
       notify: true

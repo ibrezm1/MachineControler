@@ -83,24 +83,27 @@ class Bot:
     
     def botRespond(self,region):
         if not xor(region['check']=='match' , self.botObserve(region['region'],region['matchimage'])):
-            if region['validateisactive']=='true' and self.botisUserAcive():
-                if region['notify'] == 'true' : self.botNotify()
-                if region['action'] == 'click' : self.botAct()    
+            if region['validateisactive']=='true' and not self.botisUserAcive() : return
+            if region['notify'] == True : self.botNotify()
+            if region['action'] == 'click' : self.botAct()    
 
 
 def main():
-    parser = ArgumentParser(description="Config Selection")
-    parser.add_argument("-f", dest="filename", required=True,
-                        help="input file with config.yaml", metavar="FILE",
-                        type=lambda x: is_valid_file(parser, x))
-    args = parser.parse_args()
-    config = args.filename.name
+    #parser = ArgumentParser(description="Config Selection")
+    #parser.add_argument("-f", dest="filename", required=True,
+    #                    help="input file with config.yaml", metavar="FILE",
+    #                    type=lambda x: is_valid_file(parser, x))
+    #args = parser.parse_args()
+    #config = args.filename.name
     
+    config = 'config.yaml'
+
     with open(config, 'r') as f:
         conf = yaml.safe_load(f)
 
     bot1 = Bot(conf['server'], conf['threshold'] ,conf['useractivitythreshold'])
     while True:
+        root.debug('loop started')
         for regions in conf['monitor']['points']:
             bot1.botRespond(regions)             
         time.sleep(conf['delay'])
