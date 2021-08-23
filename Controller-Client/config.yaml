@@ -1,5 +1,6 @@
 server : http://192.168.1.13:5000
 threshold : 0.8
+useractivitythreshold : 60
 delay: 3
 monitor:
   # this is single line comment.
@@ -7,6 +8,7 @@ monitor:
   # x,y,w,h
     - region: [761,253,216,114]
       matchimage: images/OK-15mins-wait.png.png
+      validateisactive: false
       check: match
       notify: true
       action: click
@@ -15,6 +17,16 @@ monitor:
 
     - region: [1147,31,35,35]
       matchimage: images/notify-red.png
+      validateisactive: false
+      check: match
+      notify: true
+      action: none
+      # frequency provides divider for the 
+      frequency: 1
+
+    - region: [1036,32,40,33]
+      matchimage: images/student-info.png
+      validateisactive: true
       check: match
       notify: true
       action: none

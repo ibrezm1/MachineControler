@@ -44,9 +44,10 @@ def is_valid_file(parser, arg):
 
 
 class Bot:
-    def __init__(self, url,threshold):
+    def __init__(self, url,threshold,useractivitythreshold):
         self.serverurl = url
         self.threshold = threshold
+        self.useractivitythreshold = useractivitythreshold
 
     def botObserve(self,region,image):
         self.region = region
@@ -64,6 +65,11 @@ class Bot:
     def botNotify(self):
         requests.get(f"{self.serverurl}/play")
 
+    def botisUserAcive(self):
+        useridle = requests.get(f"{self.serverurl}/idle")
+        idletime = int(float(useridle.text))
+        return idletime > self.useractivitythreshold
+
     def botAct(self):
         ex_x,ex_y,ex_w,ex_h = self.region
         loc = np.where( self.res >= self.threshold)
@@ -74,8 +80,13 @@ class Bot:
             cur_time = time.strftime("%m/%d/%Y, %H:%M:%S")
             print(f"Found OK {cx_x} {cx_y} at {cur_time}")
             requests.get(f"{self.serverurl}/mouse?cx={cx_x}&cy={cx_y}")
+    
+    def botRespond(self,region):
+        if not xor(region['match']=='match' , self.botObserve(region['region'],region['matchimage'])):
+            if region['validateisactive']=='true' and self.botisUserAcive():
+                if region['notify'] == 'true' : self.botNotify()
+                if region['action'] == 'click' : self.botAct()    
 
-   
 
 def main():
     parser = ArgumentParser(description="Config Selection")
@@ -88,12 +99,10 @@ def main():
     with open(config, 'r') as f:
         conf = yaml.safe_load(f)
 
-    bot1 = Bot(conf['server'], conf['threshold'])
+    bot1 = Bot(conf['server'], conf['threshold'] ,conf['useractivitythreshold'])
     while True:
         for regions in conf['monitor']['points']:
-            if not xor(regions['match']=='match' , bot1.botObserve(regions['region'],regions['matchimage'])):
-                if regions['notify'] == 'true' : bot1.botNotify()   
-                if regions['action'] == 'click' : bot1.botAct()                
+            bot1.botRespond(regions)             
         time.sleep(conf['delay'])
 
 if __name__ == "__main__":
