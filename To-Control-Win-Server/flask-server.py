@@ -49,8 +49,17 @@ def alive():
 @app.route("/play")
 def playworld():
     #https://voicemaker.in/
-    winsound.PlaySound("Sounds/student-waiting.wav", winsound.SND_ALIAS | winsound.SND_ASYNC)
-    return "<p>Hello, World!</p>"
+    bar = request.args.to_dict()
+    if 'sound' in bar :
+        if 'studentwaiting' in bar['sound']:
+            play_sound = 'studentwaiting'
+        elif 'alertdisissed' in bar['sound']:
+            play_sound = 'alertdisissed'
+        elif 'studentnotify' in bar['sound']:
+            play_sound = 'studentnotify'
+        winsound.PlaySound(f"Sounds/{play_sound}.wav", winsound.SND_ALIAS | winsound.SND_ASYNC)
+        return "<p>Requested sound queued</p>"    
+    return "<p>Invalid input</p>"
 
 
 @app.route("/mouse")
