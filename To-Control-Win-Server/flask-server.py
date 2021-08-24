@@ -38,7 +38,6 @@ def get_idle_duration():
     return str(millis / 1000.0)
 
 
-
 @app.route("/")
 def helloworld():
     return "<p>Hello, World!</p>"
@@ -49,8 +48,9 @@ def alive():
 
 @app.route("/play")
 def playworld():
-    winsound.PlaySound("SystemExit", winsound.SND_ASYNC)
-    return "<p>Completed</p>"
+    #https://voicemaker.in/
+    winsound.PlaySound("Sounds/student-waiting.wav", winsound.SND_ALIAS | winsound.SND_ASYNC)
+    return "<p>Hello, World!</p>"
 
 
 @app.route("/mouse")
@@ -61,10 +61,10 @@ def mouseworld():
         a = [int(v) for k,v in bar.items() if k[0]=='c']
         a = a[:2]
         _x,_y = a
-    logger.info(f"final sie: {a}")
+    logger.debug(f"final sie: {a}")
     mouse.move(_x, _y, absolute=True, duration=0.1)
     mouse.click('left')
-    return "<p>Completed</p>"
+    return "<p>Hello, World!</p>"
 
 @app.route("/getimage")
 def GetScreeshot():
@@ -75,7 +75,8 @@ def GetScreeshot():
         a = a[:4]
         a = a[:2] + [x1+x2 for x1,x2 in zip(a[:2],a[2:])]
         box = tuple(a)
-        logger.info(f"final sie: {box}")
+        logger.debug(f"final sie: {box}")
+        #logger.info('o')
         #box= (1,1,100,100)
     else:
         box=None
