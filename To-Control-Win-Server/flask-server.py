@@ -52,11 +52,11 @@ def playworld():
     bar = request.args.to_dict()
     if 'sound' in bar :
         if 'studentwaiting' in bar['sound']:
-            play_sound = 'studentwaiting'
+            play_sound = 'Studentiswaiting'
         elif 'alertdisissed' in bar['sound']:
-            play_sound = 'alertdisissed'
+            play_sound = 'messagedismissed'
         elif 'studentnotify' in bar['sound']:
-            play_sound = 'studentnotify'
+            play_sound = 'studentnotification'
         winsound.PlaySound(f"Sounds/{play_sound}.wav", winsound.SND_ALIAS | winsound.SND_ASYNC)
         return "<p>Requested sound queued</p>"    
     return "<p>Invalid input</p>"
