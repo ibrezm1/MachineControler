@@ -4,6 +4,7 @@ useractivitythreshold : 60
 delay: 3
 monitor:
   # this is single line comment.
+  # https://www.peko-step.com/en/tool/cropimage.html
   points:
   # x,y,w,h
     - region: [761,253,216,114]
