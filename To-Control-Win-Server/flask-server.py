@@ -1,8 +1,6 @@
 from ctypes import Structure, windll, c_uint, sizeof, byref
 from flask import Flask,request
 from PIL import ImageGrab
-import cv2
-from numpy import array
 import time
 from flask import send_file
 from waitress import serve
